@@ -1,0 +1,170 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<ReExamAppV2._3.Models.Experience>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (User.IsInRole("CompanyAdministrator"))
+{
+    <h2>List of Achievements</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-spacing" })
+    </p>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Role  @Html.DisplayNameFor(model => model.CompanyRole.Name)
+            </th>
+            <th>
+                Employee @Html.DisplayNameFor(model => model.User.Name)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearsOfExperience)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyRole.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name) @Html.DisplayFor(modelItem => item.User.Surname)
+                </td>
+           
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearsOfExperience)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-spacing" }) 
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-spacing" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-spacing" })
+
+
+               
+
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+   
+
+    <h2>List of Your Achievements</h2>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Role  @Html.DisplayNameFor(model => model.CompanyRole.Name)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearsOfExperience)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.UserId == User.Identity.GetUserId())
+            {
+
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyRole.Name)
+                    </td>
+                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Level)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearsOfExperience)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-spacing" }) 
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-spacing" }) 
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-spacing" })
+                    </td>
+                </tr>
+
+
+
+            }
+
+        }
+
+    </table>
+
+
+
+
+    <h2>Other employees achievements</h2>
+
+   
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Role  @Html.DisplayNameFor(model => model.CompanyRole.Name)
+            </th>
+            <th>
+                Employee @Html.DisplayNameFor(model => model.User.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearsOfExperience)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.UserId != User.Identity.GetUserId())
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyRole.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.Name) @Html.DisplayFor(modelItem => item.User.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Level)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearsOfExperience)
+                    </td>
+                    <td>
+                       
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-spacing" }) 
+                        @Html.ActionLink("Employee Details", "Details", "Employees", new { id = item.User.Id }, new { @class = "btn btn-info btn-spacing" }) 
+                       
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+}
+
+

@@ -1,0 +1,123 @@
+﻿@model ReExamAppV2._3.ViewModels.RolesViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CompanyRole</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyRole.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyRole.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyRole.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyRole.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyRole.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyRole.CreationDate)
+        </dd>
+
+    </dl>
+</div>
+
+<hr/>
+
+
+<div>
+    <h3>Users in this role</h3>
+
+    <table class="table table-bordered table-hover">
+
+        <tr>
+            <th>
+                
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Email
+            </th>
+            <th>Phone</th>
+            <th></th>
+        </tr>
+
+
+       
+
+
+            @foreach (var focus in Model.ListOfEmployeeHasFocuses)
+            {
+                foreach (var user in Model.Users)
+                {
+                    if (focus.RoleId == Model.CompanyRole.Id && user.Id == focus.UserId)
+                    {
+
+
+                        <tr>
+                            <td>
+                                <img src="@user.Photo" class="img-thumbnail" alt="Cinque Terre" width="150" height="150" />
+                            </td>
+                            <td>
+                                @user.Name
+                            </td>
+                            <td>
+                            @user.Surname
+                            <td>
+                                @user.Email
+                            </td>
+                            <td>
+                                @user.Phone
+                            </td>
+                            <td>
+
+                                @Html.ActionLink("Details", "Details", "Employees", new {id = user.Id}, new {@class = "btn btn-info btn-spacing"})
+
+
+
+
+                            </td>
+                        </tr>
+
+
+                    }
+                }
+
+
+
+            }
+        
+
+    </table>
+
+
+</div>
+
+
+
+
+
+<p>
+   @* @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default btn-spacing" })
+</p>

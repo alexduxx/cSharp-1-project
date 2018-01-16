@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNet.Identity
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            @Html.ActionLink("ReExamApp", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
+                <li>@Html.ActionLink("Roles", "Index", "CompanyRoles")</li>
+                @if (User.IsInRole("CompanyAdministrator"))
+                {
+                    <li>@Html.ActionLink("Focuses", "Index", "EmployeeHasFocus")</li>
+                    <li>@Html.ActionLink("Experiences", "Index", "Experiences")</li>
+                }
+                else if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Focuses", "Index", "EmployeeHasFocus", new { id = User.Identity.GetUserId() }, null)</li>
+                    <li>@Html.ActionLink("Experiences", "Index", "Experiences", new { id = User.Identity.GetUserId() }, null)</li>
+                }
+          
+               
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>

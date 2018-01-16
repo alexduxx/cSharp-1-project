@@ -1,0 +1,153 @@
+﻿@model ReExamAppV2._3.ViewModels.RolesViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Focus List</h2>
+
+
+
+@if (User.IsInRole("CompanyAdministrator"))
+{
+
+    <div>
+        <h3>Active focuses</h3>
+
+        <table class="table table-bordered table-hover">
+
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Yearly focus
+                </th>
+                <th>
+                    Employee name
+                </th>
+                <th></th>
+            </tr>
+
+
+            @foreach (var role in Model.ListOfCompanyRoles)
+            {
+
+                foreach (var focus in Model.ListOfEmployeeHasFocuses)
+                {
+
+                    foreach (var user in Model.Users)
+                    {
+
+                        if (role.Id == focus.RoleId && user.Id == focus.UserId)
+                        {
+
+
+                            <tr>
+                                <td>
+                                    @role.Name
+                                </td>
+                                <td>
+                                    @role.Description
+                                </td>
+                                <td>
+                                    @role.CreationDate
+                                </td>
+                                <td>
+                                    @user.Name @user.Surname
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink("Details", "Details", new { id = focus.Id }, new { @class = "btn btn-info btn-spacing" }) 
+                                    @Html.ActionLink("Delete focus", "Delete", new { id = focus.Id }, new { @class = "btn btn-warning btn-spacing" })
+                                    @*@Html.ActionLink("Set as achieved", "SetAchievement", new { id = focus.Id })*@
+
+
+
+
+                                </td>
+                            </tr>
+
+                        }
+
+
+                    }
+                }
+            }
+
+        </table>
+    </div>
+
+
+
+
+
+}
+else
+{
+    <div>
+        <h3>Your focuses</h3>
+
+        <table class="table table-bordered table-hover">
+
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Yearly focus
+                </th>
+                <th></th>
+            </tr>
+
+
+            @foreach (var role in Model.ListOfCompanyRoles)
+            {
+
+                foreach (var focus in Model.ListOfEmployeeHasFocuses)
+                {
+                    if (role.Id == focus.RoleId && focus.UserId == Model.UserId)
+                    {
+
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => role.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => role.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => role.CreationDate)
+                            </td>
+                            <td>
+
+                                @Html.ActionLink("Details", "Details", new { id = focus.Id }, new { @class = "btn btn-info btn-spacing" }) 
+                                @Html.ActionLink("Delete focus", "Delete", new { id = focus.Id }, new { @class = "btn btn-danger btn-spacing" })
+
+                           
+                                @Html.ActionLink("Set as achieved", "SetAchievement","Experiences", new { id = focus.RoleId }, new { @class = "btn btn-success btn-spacing" })
+
+
+
+
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+
+        </table>
+    </div>
+}
+
+
+
+
+    

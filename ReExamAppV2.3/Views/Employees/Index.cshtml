@@ -1,0 +1,67 @@
+﻿@model ReExamAppV2._3.ViewModels.EmployeesViewModel
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>List of employees</h2>
+
+<div>
+    <h4>EmployeesViewModel</h4>
+    <hr />
+    
+    <table class="table table-bordered table-hover">
+
+        <tr class="active">
+            <th></th>
+            <th >
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+
+            </th>
+
+
+        </tr>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.Photo" class="img-thumbnail" alt="Cinque Terre" width="150" height="150" />
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Surname
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td> @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-info btn-spacing"}) </td>
+
+
+                </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+
+    
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+﻿@model ReExamAppV2._3.ViewModels.EmployeeDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmployeeDetailsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="row">
+            <div class="col-md-2">
+                <img  class="col-md-12" src="@Model.Photo" alt="Profile picture" />
+            </div>
+            <div class="col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Surname)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+            </div>
+        </div>
+        
+
+
+    </dl>
+</div>
+
+<h3> @Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname) has these roles</h3>
+<table class="table table-bordered table-hover">
+    <tr class="active">
+        <th>
+            Role Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Yearly focus
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var focus in Model.Focuses)
+    {
+        foreach (var role in Model.Roles)
+        {
+            if (focus.RoleId == role.Id)
+            {
+                <tr>
+                    <td>@role.Name</td>
+                    <td>@role.Description</td>
+                    <td>@focus.YearlyFocus</td>
+                    <td>@Html.ActionLink("Details","Details","CompanyRoles", new { id = role.Id }, new { @class = "btn btn-info btn-spacing" })</td>
+                </tr>
+               
+            }
+        }
+    }
+   
+
+</table>
+
+
+<p>
+   
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default btn-spacing" })
+</p>
